@@ -8,6 +8,7 @@ const AddNote = (props) => {
         e.preventDefault();
         addNote(note.title, note.description, note.tag);
         setNote({title: "", description: "", tag: ""})
+        props.refClose.current.click();
         props.showAlert("Note Added Successfully", "success");
     }
     const onChange = (e) => {
@@ -16,7 +17,6 @@ const AddNote = (props) => {
     return (
         <>
             <div className="container my-3">
-                <h1>Add a Note</h1>
                 <form className="my-3">
                     <div className="mb-3">
                         <label htmlFor="title" className="form-label">Title</label>
@@ -30,7 +30,8 @@ const AddNote = (props) => {
                         <label htmlFor="tag" className="form-label">Tag</label>
                         <input type="text" className="form-control" value={note.tag} id="tag" name="tag" onChange={onChange} minLength={5} required/>
                     </div>
-                    <button disabled={note.title.length < 5 || note.description < 5} type="submit" className="btn btn-primary" onClick={handleClick}>Add Note</button>
+                    <hr className="my-4" />
+                    <button disabled={note.title.length < 5 || note.description < 5} type="submit" className="btn btn-primary" onClick={handleClick}><i class="bi bi-cloud-plus-fill me-2"></i>Add Note</button>
                 </form>
             </div>
         </>

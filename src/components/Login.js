@@ -29,18 +29,20 @@ const Login = (props) => {
     }
     return (
         <>
-            <h2 className="mt-3">Login</h2>
-            <form onSubmit={handleSubmit}>
-                <div className="mb-3">
-                    <label htmlFor="email" className="form-label">Email address</label>
-                    <input type="email" value={credentials.email} className="form-control" id="email" name="email" aria-describedby="emailHelp" onChange={onChange} />
-                    <div id="emailHelp" className="form-text">We'll never share your email with anyone else.</div>
+            <form onSubmit={handleSubmit} className="card border-primary mt-3 rounded-5 p-5 pt-3 shadow">
+                <div className="card-body">
+                    <h1 className="text-center">Login</h1>
+                    <div className="mb-3 pt-3">
+                        <label htmlFor="email" className="form-label">Email address</label>
+                        <input type="email" value={credentials.email} className="form-control" id="email" name="email" aria-describedby="emailHelp" onChange={onChange} />
+                        <div id="emailHelp" className="form-text">We'll never share your email with anyone else.</div>
+                    </div>
+                    <div className="mb-3 py-3">
+                        <label htmlFor="password" className="form-label">Password</label>
+                        <input type="password" value={credentials.password} className="form-control" id="password" name="password" onChange={onChange} />
+                    </div>
+                    <button type="submit" className="btn btn-primary fs-5 pe-3"><i class="bi bi-box-arrow-in-right me-2"></i>Login</button>
                 </div>
-                <div className="mb-3">
-                    <label htmlFor="password" className="form-label">Password</label>
-                    <input type="password" value={credentials.password} className="form-control" id="password" name="password" onChange={onChange} />
-                </div>
-                <button type="submit" className="btn btn-primary">Submit</button>
             </form>
         </>
     )
