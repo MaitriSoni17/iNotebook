@@ -32,6 +32,8 @@ const Notes = (props) => {
     const onChange = (e) => {
         setNote({ ...note, [e.target.name]: e.target.value })
     }
+
+    
     return (
         <>
             <AddNote showAlert={props.showAlert} />
@@ -74,7 +76,7 @@ const Notes = (props) => {
                     {notes.length === 0 && "No Notes to Dispaly"}
                 </div>
                 {notes.map((note) => {
-                    return <NoteItem key={note._id} updateNote={updateNote} note={note} showAlert={props.showAlert} />
+                    return <NoteItem key={note._id} updateNote={updateNote} note={note} showAlert={props.showAlert}/>
                 })}
             </div>
         </>
