@@ -76,7 +76,7 @@ const Notes = (props) => {
                     {notes.length === 0 && "No Notes to Dispaly"}
                 </div>
                 {notes.map((note) => {
-                    return <NoteItem key={note._id} updateNote={updateNote} note={note} showAlert={props.showAlert}/>
+                    return <NoteItem key={note._id} updateNote={updateNote} note={note} showAlert={props.showAlert} ref={ref}/>
                 })}
             </div>
         </>
