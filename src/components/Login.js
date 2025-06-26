@@ -3,6 +3,10 @@ import { useNavigate } from 'react-router-dom'
 
 const Login = (props) => {
     const [credentials, setCredentials] = useState({ email: "", password: "" })
+    const [showPassword, setShowPassword] = useState(false);
+    const passVisibility = () => {
+        setShowPassword(prev => !prev);
+    }
     let history = useNavigate();
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -39,9 +43,13 @@ const Login = (props) => {
                     </div>
                     <div className="mb-3 py-3">
                         <label htmlFor="password" className="form-label">Password</label>
-                        <input type="password" value={credentials.password} className="form-control" id="password" name="password" onChange={onChange} />
+                        <div className="d-flex">
+                            <input type={showPassword ? "text" : "password"} value={credentials.password} className="form-control" id="password" name="password" onChange={onChange} /><i className={`bi ${showPassword ? "bi-eye-slash" : "bi-eye"} fs-4 mx-3 text-primary`} onClick={passVisibility}></i>
+                        </div>
                     </div>
-                    <button type="submit" className="btn btn-primary fs-5 pe-3"><i class="bi bi-box-arrow-in-right me-2"></i>Login</button>
+                    <div className="d-flex justify-content-center">
+                        <button type="submit" className="btn btn-primary fs-5 pe-3"><i className="bi bi-box-arrow-in-right me-2"></i>Login</button>
+                    </div>
                 </div>
             </form>
         </>

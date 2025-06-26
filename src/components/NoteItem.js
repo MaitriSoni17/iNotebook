@@ -26,11 +26,11 @@ const NoteItem = (props) => {
                         <div className="modal-body">
                             {note.description}
                         </div>
-                        <div class="modal-footer position-relative">
+                        <div className="modal-footer position-relative">
                             <p className="position-absolute top-0 start-0 mt-4 text-secondary ms-3">Created: {note.date.split("T")[0]}</p>
-                            <button type="button" class="btn btn-secondary fs-6" data-bs-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-danger fs-6" data-bs-dismiss="modal" onClick={() => { deleteNote(note._id); props.showAlert("Note Deleted Successfully", "success"); }}><i class="bi bi-trash3-fill me-2"></i>Delete</button>
-                            <button type="button" class="btn btn-primary fs-6" onClick={() => { ref.current.click(); }}><i class="bi bi-pencil-square me-2"></i>Edit Note</button>
+                            <button type="button" className="btn btn-secondary fs-6" data-bs-dismiss="modal">Close</button>
+                            <button type="button" className="btn btn-danger fs-6" data-bs-dismiss="modal" onClick={() => { deleteNote(note._id); props.showAlert("Note Deleted Successfully", "success"); }}><i className="bi bi-trash3-fill me-2"></i>Delete</button>
+                            <button type="button" className="btn btn-primary fs-6" onClick={() => { ref.current.click(); }}><i className="bi bi-pencil-square me-2"></i>Edit Note</button>
                         </div>
                     </div>
                 </div>

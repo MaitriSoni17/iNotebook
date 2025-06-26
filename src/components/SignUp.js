@@ -3,6 +3,14 @@ import { useNavigate } from 'react-router-dom'
 
 const SignUp = (props) => {
   const [credentials, setCredentials] = useState({ name: "", email: "", password: "", cpassword: "" })
+  const [showPassword, setShowPassword] = useState(false);
+  const [showCPassword, setShowCPassword] = useState(false);
+  const passVisibility = () => {
+    setShowPassword(prev => !prev);
+  }
+  const cpassVisibility = () => {
+    setShowCPassword(prev => !prev);
+  }
   let history = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -16,12 +24,12 @@ const SignUp = (props) => {
     });
     const json = await response.json();
     console.log(json);
-    if(json.success){
+    if (json.success) {
       localStorage.setItem('token', json.authtoken);
       history("/");
       props.showAlert("Account Created Successfully", "success")
     }
-    else{
+    else {
       props.showAlert("Invalid Credentials", "danger")
     }
   }
@@ -30,28 +38,36 @@ const SignUp = (props) => {
   }
   return (
     <>
-      <div className="container">
-        <h2 className="mt-3">Sign Up</h2>
-        <form onSubmit={handleSubmit}>
-          <div className="mb-3">
-            <label htmlFor="name" className="form-label">Name</label>
-            <input type="text" className="form-control" onChange={onChange} id="name" name="name" />
-          </div>
-          <div className="mb-3">
-            <label htmlFor="email" className="form-label">Email address</label>
-            <input type="email" className="form-control" onChange={onChange} id="email" name="email" aria-describedby="emailHelp" required/>
-            <div id="emailHelp" className="form-text">We'll never share your email with anyone else.</div>
-          </div>
-          <div className="mb-3">
-            <label htmlFor="password" className="form-label">Password</label>
-            <input type="password" className="form-control" onChange={onChange} id="password" name="password" minLength={5} required/>
-          </div>
-          <div className="mb-3">
-            <label htmlFor="cpassword" className="form-label">Confirm Password</label>
-            <input type="password" className="form-control" onChange={onChange} id="cpassword" name="cpassword" minLength={5} required/>
-          </div>
-          <button type="submit" className="btn btn-primary">Submit</button>
-        </form>
+      <div className="container card rounded-5 shadow border-primary">
+        <div className="card-body">
+          <h1 className="mt-3 text-center">Sign Up</h1>
+          <form onSubmit={handleSubmit}>
+            <div className="mb-4">
+              <label htmlFor="name" className="form-label">Name</label>
+              <input type="text" className="form-control" onChange={onChange} id="name" name="name" />
+            </div>
+            <div className="mb-4">
+              <label htmlFor="email" className="form-label">Email address</label>
+              <input type="email" className="form-control" onChange={onChange} id="email" name="email" aria-describedby="emailHelp" required />
+              <div id="emailHelp" className="form-text">We'll never share your email with anyone else.</div>
+            </div>
+            <div className="mb-4">
+              <label htmlFor="password" className="form-label">Password</label>
+              <div className="d-flex">
+                <input type={showPassword ? "text" : "password"} className="form-control" onChange={onChange} id="password" name="password" minLength={5} required /><i className={`bi ${showPassword? "bi-eye-slash" : "bi-eye"} fs-4 mx-3 text-primary`} onClick={passVisibility}></i>
+              </div>
+            </div>
+            <div className="mb-4">
+              <label htmlFor="cpassword" className="form-label">Confirm Password</label>
+              <div className="d-flex">
+                <input type={showCPassword ? "text" : "password"} className="form-control" onChange={onChange} id="cpassword" name="cpassword" minLength={5} required /><i className={`bi ${showCPassword? "bi-eye-slash" : "bi-eye"} fs-4 mx-3 text-primary`} onClick={cpassVisibility}></i>
+              </div>
+            </div>
+            <div className="d-flex justify-content-center">
+              <button type="submit" className="btn btn-primary mb-4 fs-6"><i className="bi bi-person me-2"></i>Sign Up</button>
+            </div>
+          </form>
+        </div>
       </div>
     </>
   )

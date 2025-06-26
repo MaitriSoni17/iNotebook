@@ -31,7 +31,7 @@ const AddNote = (props) => {
                         <input type="text" className="form-control" value={note.tag} id="tag" name="tag" onChange={onChange} minLength={5} required/>
                     </div>
                     <hr className="my-4" />
-                    <button disabled={note.title.length < 5 || note.description < 5} type="submit" className="btn btn-primary" onClick={handleClick}><i class="bi bi-cloud-plus-fill me-2"></i>Add Note</button>
+                    <button disabled={note.title.length < 5 || note.description < 5} type="submit" className="btn btn-primary" onClick={handleClick}><i className="bi bi-cloud-plus-fill me-2"></i>Add Note</button>
                 </form>
             </div>
         </>
