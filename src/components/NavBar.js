@@ -11,6 +11,9 @@ const NavBar = () => {
     useEffect(() => {
         // console.log(location.pathname);
     }, [location]);
+    const showUser = ()=>{
+        history("/userdetails");
+    }
     return (
         <>
             <nav className="navbar navbar-expand-lg bg-body-tertiary">
@@ -31,7 +34,7 @@ const NavBar = () => {
                         {!localStorage.getItem('token') ? <form className="d-flex">
                             <Link className="btn btn-primary mx-1" to = "/login" role="button" aria-disabled="true">Login</Link>
                             <Link className="btn btn-primary mx-1" to="/signup" role="button" aria-disabled="true">Sign Up</Link>
-                        </form>: <Link onClick={handleLogout} className="btn btn-primary mx-1" to="/" role="button">Log Out</Link>}
+                        </form>: <form className="d-flex"><Link onClick={handleLogout} className="btn btn-primary mx-1" to="/" role="button">Log Out</Link><i className="bi bi-person-circle fs-3 mx-3 text-primary" onClick={showUser}></i></form>}
                     </div>
                 </div>
             </nav>
