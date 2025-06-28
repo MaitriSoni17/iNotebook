@@ -20,10 +20,10 @@ const NoteItem = (props) => {
                     <div className="modal-content">
                         <div className="modal-header">
                             <h1 className="modal-title fs-5" id={`NoteDisplay-${note._id}`}>{note.title}</h1>
-
                             <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
-                        <div className="modal-body">
+                        <div className="modal-body position-relative">
+                            <p className="position-absolute top-0 end-0 bg-warning p-1 px-3 fw-medium rounded-pill rounded-end-0">{note.tag}</p>
                             {note.description}
                         </div>
                         <div className="modal-footer position-relative">
@@ -47,9 +47,10 @@ const NoteItem = (props) => {
                             <p className="card-text fw-bold">{note.description}</p>
                         </div>
                         <hr />
-                        <div className="d-flex justify-content-start">
+                        <div className="d-flex justify-content-evenly">
                             <i className="bi bi-trash-fill me-3 text-danger fs-5" onClick={() => { deleteNote(note._id); props.showAlert("Note Deleted Successfully", "success"); }}></i>
-                            <i className="bi bi-pencil-square me-3 text-primary fs-5" onClick={() => { updateNote(note) }}></i>
+                            <i className="bi bi-pencil-square me-4 pe-2 text-primary fs-5" onClick={() => { updateNote(note) }}></i>
+                            <p className="text-secondary ms-5 ps-5">{note.date.split("T")[0]}</p>
                         </div>
                         <p className="position-absolute top-0 end-0 bg-warning p-1 px-3 fw-medium rounded-pill rounded-end-0 mt-2">{note.tag}</p>
                     </div>

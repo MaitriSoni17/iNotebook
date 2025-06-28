@@ -38,7 +38,9 @@ const Login = (props) => {
                     <h1 className="text-center">Login</h1>
                     <div className="mb-3 pt-3">
                         <label htmlFor="email" className="form-label">Email address</label>
-                        <input type="email" value={credentials.email} className="form-control" id="email" name="email" aria-describedby="emailHelp" onChange={onChange} />
+                        <div className="d-flex">
+                            <input type="email" value={credentials.email} className="form-control me-5" id="email" name="email" aria-describedby="emailHelp" onChange={onChange} />
+                        </div>
                         <div id="emailHelp" className="form-text">We'll never share your email with anyone else.</div>
                     </div>
                     <div className="mb-3 py-3">
@@ -47,7 +49,7 @@ const Login = (props) => {
                             <input type={showPassword ? "text" : "password"} value={credentials.password} className="form-control" id="password" name="password" onChange={onChange} /><i className={`bi ${showPassword ? "bi-eye-slash" : "bi-eye"} fs-4 mx-3 text-primary`} onClick={passVisibility}></i>
                         </div>
                     </div>
-                    <div className="d-flex justify-content-center">
+                    <div className="text-center">
                         <button type="submit" className="btn btn-primary fs-5 pe-3"><i className="bi bi-box-arrow-in-right me-2"></i>Login</button>
                     </div>
                 </div>

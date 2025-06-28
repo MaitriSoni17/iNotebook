@@ -50,11 +50,15 @@ const SignUp = (props) => {
           <form onSubmit={handleSubmit}>
             <div className="mb-4">
               <label htmlFor="name" className="form-label">Name</label>
-              <input type="text" className="form-control" onChange={onChange} id="name" name="name" />
+              <div className="d-flex">
+                <input type="text" className="form-control me-5" onChange={onChange} id="name" name="name" />
+              </div>
             </div>
             <div className="mb-4">
               <label htmlFor="email" className="form-label">Email address</label>
-              <input type="email" className="form-control" onChange={onChange} id="email" name="email" aria-describedby="emailHelp" required />
+              <div className="d-flex">
+                <input type="email" className="form-control me-5" onChange={onChange} id="email" name="email" aria-describedby="emailHelp" required />
+              </div>
               <div id="emailHelp" className="form-text">We'll never share your email with anyone else.</div>
             </div>
             <div className="mb-4">
@@ -69,7 +73,7 @@ const SignUp = (props) => {
                 <input type={showCPassword ? "text" : "password"} className="form-control" onChange={onChange} id="cpassword" name="cpassword" minLength={5} required /><i className={`bi ${showCPassword ? "bi-eye-slash" : "bi-eye"} fs-4 mx-3 text-primary`} onClick={cpassVisibility}></i>
               </div>
             </div>
-            <div className="d-flex justify-content-center">
+            <div className="text-center">
               <button type="submit" className="btn btn-primary mb-4 fs-6"><i className="bi bi-person me-2"></i>Sign Up</button>
             </div>
           </form>
