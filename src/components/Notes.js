@@ -52,15 +52,15 @@ const Notes = (props) => {
                         <div className="modal-body">
                             <form className="my-3">
                                 <div className="mb-3">
-                                    <label htmlFor="etitle" className="form-label">Title</label>
+                                    <label htmlhtmlFor="etitle" className="form-label">Title</label>
                                     <input type="text" className="form-control" value={note.etitle} id="etitle" name="etitle" aria-describedby="emailHelp" onChange={onChange} minLength={5} required />
                                 </div>
                                 <div className="mb-3">
-                                    <label htmlFor="edescription" className="form-label">Description</label>
+                                    <label htmlhtmlFor="edescription" className="form-label">Description</label>
                                     <input type="text" className="form-control" value={note.edescription} id="edescription" name="edescription" onChange={onChange} minLength={5} required />
                                 </div>
                                 <div className="mb-3">
-                                    <label htmlFor="etag" className="form-label">Tag</label>
+                                    <label htmlhtmlFor="etag" className="form-label">Tag</label>
                                     <input type="text" className="form-control" value={note.etag} id="etag" name="etag" onChange={onChange} minLength={5} required />
                                 </div>
                             </form>
@@ -78,7 +78,7 @@ const Notes = (props) => {
             <button ref={refAddNote} type="button" className="btn btn-primary d-none" data-bs-toggle="modal" data-bs-target="#addnote">
                 Launch demo modal
             </button>
-            <div className="modal fade" id="addnote" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div className="modal fade" id="addnote" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div className="modal-dialog">
                     <div className="modal-content">
                         <div className="modal-header">

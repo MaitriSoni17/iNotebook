@@ -8,14 +8,13 @@ const NoteItem = (props) => {
     const refDisplay = useRef(null);
     const displayNote = () => {
         refDisplay.current.click();
-        console.log("Note Displayed")
     }
     return (
         <>
             <button ref={refDisplay} type="button" className="btn btn-primary d-none" data-bs-toggle="modal" data-bs-target={`#NoteDisplay-${note._id}`}>
                 Launch demo modal
             </button>
-            <div className="modal fade" id={`NoteDisplay-${note._id}`} tabindex="-1" aria-labelledby={`NoteDisplay-${note._id}`} aria-hidden="true">
+            <div className="modal fade" id={`NoteDisplay-${note._id}`} tabIndex="-1" aria-labelledby={`NoteDisplay-${note._id}`} aria-hidden="true">
                 <div className="modal-dialog">
                     <div className="modal-content">
                         <div className="modal-header">
