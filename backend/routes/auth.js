@@ -108,4 +108,33 @@ router.post('/getuser', fetchuser, async (req, res) => {
     }
 })
 
+// ROUT 4: Get loggedin user using: PUT "/api/auth/edituser". Login required
+router.put('/edituser/:id', fetchuser, async (req, res) => {
+    let success = false
+    try {
+        const {name, email} = req.body;
+        let newDetails = {}
+        if(name){
+            newDetails.name = name;
+        }
+        if(email){
+            newDetails.email = email;
+        }
+        if(await User.findOne({email: req.body.email})){
+            success = false
+            return res.status(400).json({ success, error: "Sorry, a user with this email already exists" })
+        }
+        let user = await User.findById(req.params.id);
+        if(!user){
+            return res.status(404).send("Not Found");
+        }
+        user = await User.findByIdAndUpdate(req.params.id, {$set: newDetails});
+        success=true;
+        res.json({success, user});
+    }
+    catch (error) {
+        console.error(error.message);
+        res.status(500).send("Internal Server Error");
+    }
+})
 module.exports = router
