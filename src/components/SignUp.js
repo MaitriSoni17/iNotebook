@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
+
 const SignUp = (props) => {
   const [credentials, setCredentials] = useState({ name: "", email: "", password: "", cpassword: "" })
   const [showPassword, setShowPassword] = useState(false);
@@ -14,23 +15,28 @@ const SignUp = (props) => {
   let history = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const { name, email, password } = credentials;
-    const response = await fetch("http://localhost:5000/api/auth/createuser", {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ name, email, password })
-    });
-    const json = await response.json();
-    console.log(json);
-    if (json.success) {
-      localStorage.setItem('token', json.authtoken);
-      history("/");
-      props.showAlert("Account Created Successfully", "success")
+    if (credentials.password !== credentials.cpassword) {
+      props.showAlert("Password and Confirm Password Both are must be same!!", "danger")
     }
     else {
-      props.showAlert("Invalid Credentials", "danger")
+      const { name, email, password } = credentials;
+      const response = await fetch("http://localhost:5000/api/auth/createuser", {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ name, email, password })
+      });
+      const json = await response.json();
+      console.log(json);
+      if (json.success) {
+        localStorage.setItem('token', json.authtoken);
+        history("/");
+        props.showAlert("Account Created Successfully", "success")
+      }
+      else {
+        props.showAlert("Invalid Credentials", "danger")
+      }
     }
   }
   const onChange = (e) => {
@@ -38,7 +44,7 @@ const SignUp = (props) => {
   }
   return (
     <>
-      <div className="container card rounded-5 shadow border-primary">
+      <div className="container card rounded-5 shadow border-primary mt-5">
         <div className="card-body">
           <h1 className="mt-3 text-center">Sign Up</h1>
           <form onSubmit={handleSubmit}>
@@ -54,13 +60,13 @@ const SignUp = (props) => {
             <div className="mb-4">
               <label htmlFor="password" className="form-label">Password</label>
               <div className="d-flex">
-                <input type={showPassword ? "text" : "password"} className="form-control" onChange={onChange} id="password" name="password" minLength={5} required /><i className={`bi ${showPassword? "bi-eye-slash" : "bi-eye"} fs-4 mx-3 text-primary`} onClick={passVisibility}></i>
+                <input type={showPassword ? "text" : "password"} className="form-control" onChange={onChange} id="password" name="password" minLength={5} required /><i className={`bi ${showPassword ? "bi-eye-slash" : "bi-eye"} fs-4 mx-3 text-primary`} onClick={passVisibility}></i>
               </div>
             </div>
             <div className="mb-4">
               <label htmlFor="cpassword" className="form-label">Confirm Password</label>
               <div className="d-flex">
-                <input type={showCPassword ? "text" : "password"} className="form-control" onChange={onChange} id="cpassword" name="cpassword" minLength={5} required /><i className={`bi ${showCPassword? "bi-eye-slash" : "bi-eye"} fs-4 mx-3 text-primary`} onClick={cpassVisibility}></i>
+                <input type={showCPassword ? "text" : "password"} className="form-control" onChange={onChange} id="cpassword" name="cpassword" minLength={5} required /><i className={`bi ${showCPassword ? "bi-eye-slash" : "bi-eye"} fs-4 mx-3 text-primary`} onClick={cpassVisibility}></i>
               </div>
             </div>
             <div className="d-flex justify-content-center">
