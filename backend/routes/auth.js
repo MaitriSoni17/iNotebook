@@ -108,11 +108,11 @@ router.post('/getuser', fetchuser, async (req, res) => {
     }
 })
 
-// ROUT 4: Get loggedin user using: PUT "/api/auth/edituser". Login required
+// ROUT 4: Update Details of loggedin user using: PUT "/api/auth/edituser". Login required
 router.put('/edituser/:id', fetchuser, async (req, res) => {
     let success = false
     try {
-        const {name, email} = req.body;
+        const {name, email, password} = req.body;
         let newDetails = {}
         if(name){
             newDetails.name = name;
@@ -120,10 +120,15 @@ router.put('/edituser/:id', fetchuser, async (req, res) => {
         if(email){
             newDetails.email = email;
         }
-        if(await User.findOne({email: req.body.email})){
-            success = false
-            return res.status(400).json({ success, error: "Sorry, a user with this email already exists" })
+        const salt = await bcrypt.genSalt(10);
+        const secPass = await bcrypt.hash(req.body.password, salt);
+        if(password){
+            newDetails.password = secPass;
         }
+        // if(await User.findOne({email: req.body.email})){
+        //     success = false
+        //     return res.status(400).json({ success, error: "Sorry, a user with this email already exists" })
+        // }
         let user = await User.findById(req.params.id);
         if(!user){
             return res.status(404).send("Not Found");
