@@ -19,15 +19,15 @@ const AddNote = (props) => {
             <div className="container my-3">
                 <form className="my-3">
                     <div className="mb-3">
-                        <label htmlhtmlFor="title" className="form-label">Title</label>
+                        <label htmlFor="title" className="form-label">Title</label>
                         <input type="text" className="form-control" value={note.title} id="title" name="title" aria-describedby="emailHelp" onChange={onChange} minLength={5} required/>
                     </div>
                     <div className="mb-3">
-                        <label htmlhtmlFor="description" className="form-label">Description</label>
+                        <label htmlFor="description" className="form-label">Description</label>
                         <input type="text" className="form-control" value={note.description} id="description" name="description" onChange={onChange} minLength={5} required/>
                     </div>
                     <div className="mb-3">
-                        <label htmlhtmlFor="tag" className="form-label">Tag</label>
+                        <label htmlFor="tag" className="form-label">Tag</label>
                         <input type="text" className="form-control" value={note.tag} id="tag" name="tag" onChange={onChange} minLength={5} required/>
                     </div>
                     <hr className="my-4" />

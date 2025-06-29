@@ -38,7 +38,6 @@ const Notes = (props) => {
 
     return (
         <>
-            {/* <AddNote showAlert={props.showAlert} /> */}
             <button ref={ref} type="button" className="d-none btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
                 Launch demo modal
             </button>
@@ -52,15 +51,15 @@ const Notes = (props) => {
                         <div className="modal-body">
                             <form className="my-3">
                                 <div className="mb-3">
-                                    <label htmlhtmlFor="etitle" className="form-label">Title</label>
+                                    <label htmlFor="etitle" className="form-label">Title</label>
                                     <input type="text" className="form-control" value={note.etitle} id="etitle" name="etitle" aria-describedby="emailHelp" onChange={onChange} minLength={5} required />
                                 </div>
                                 <div className="mb-3">
-                                    <label htmlhtmlFor="edescription" className="form-label">Description</label>
+                                    <label htmlFor="edescription" className="form-label">Description</label>
                                     <input type="text" className="form-control" value={note.edescription} id="edescription" name="edescription" onChange={onChange} minLength={5} required />
                                 </div>
                                 <div className="mb-3">
-                                    <label htmlhtmlFor="etag" className="form-label">Tag</label>
+                                    <label htmlFor="etag" className="form-label">Tag</label>
                                     <input type="text" className="form-control" value={note.etag} id="etag" name="etag" onChange={onChange} minLength={5} required />
                                 </div>
                             </form>
@@ -86,14 +85,14 @@ const Notes = (props) => {
                             <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" ref={refCloseAdd}></button>
                         </div>
                         <div className="modal-body">
-                            <AddNote showAlert={props.showAlert} refClose={refCloseAdd}/>
+                            <AddNote showAlert={props.showAlert} refClose={refCloseAdd} />
                         </div>
                     </div>
                 </div>
             </div>
             <div className="row my-3">
                 <h1 className="col">Your Notes</h1>
-                <button type="button" className="btn btn-primary w-auto fs-5" onClick={()=>{refAddNote.current.click()}}><i className="bi bi-cloud-plus-fill mx-2"></i>Add Note</button>
+                <button type="button" className="btn btn-primary w-auto fs-5" onClick={() => { refAddNote.current.click() }}><i className="bi bi-cloud-plus-fill mx-2"></i>Add Note</button>
                 <div className='container'>
                     {notes.length === 0 && "No Notes to Dispaly"}
                 </div>

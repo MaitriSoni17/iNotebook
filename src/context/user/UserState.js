@@ -27,18 +27,22 @@ const UserState = (props) => {
             body: JSON.stringify({name, email, password})
         });
         user = await response.json()
-        let newDetails = JSON.parse(JSON.stringify(user))
-        for (let index = 0; index < newDetails.length; index++) {
-            const element = newDetails[index];
-            if (element._id === id) {
-                newDetails[index].name = name;
-                newDetails[index].email = email;
-                newDetails[index].password = password;
-                break;
-            }
-        }
-        // console.log(user);
-        setUser(user);
+        return user;
+        // if(!user.success){
+        //     alert("Invalid Password");
+        //     return;
+        // }
+        // let newDetails = JSON.parse(JSON.stringify(user))
+        // for (let index = 0; index < newDetails.length; index++) {
+        //     const element = newDetails[index];
+        //     if (element._id === id) {
+        //         newDetails[index].name = name;
+        //         newDetails[index].email = email;
+        //         newDetails[index].password = password;
+        //         break;
+        //     }
+        // }
+        // setUser(newDetails);
     }
   return (
     <userContext.Provider value={{user, getUser, editUser}}>

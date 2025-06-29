@@ -112,7 +112,7 @@ router.post('/getuser', fetchuser, async (req, res) => {
 router.put('/edituser/:id', fetchuser, async (req, res) => {
     let success = false
     try {
-        const {name, email} = req.body;
+        const {name, email, password} = req.body;
         let newDetails = {}
         if(name){
             newDetails.name = name;
@@ -120,13 +120,15 @@ router.put('/edituser/:id', fetchuser, async (req, res) => {
         if(email){
             newDetails.email = email;
         }
-        // if(await User.findOne({email: req.body.email})){
-        //     success = false
-        //     return res.status(400).json({ success, error: "Sorry, a user with this email already exists" })
-        // }
         let user = await User.findById(req.params.id);
         if(!user){
-            return res.status(404).send("Not Found");
+            success = false;
+            return res.status(404).json({success, error: "Not Found!!"});
+        }
+        const passwordCompare = await bcrypt.compare(password, user.password);
+        if (!passwordCompare) {
+            success = false;
+            return res.status(400).json({ success, error: "Please try to login with correct credentials." });
         }
         user = await User.findByIdAndUpdate(req.params.id, {$set: newDetails});
         success=true;

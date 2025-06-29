@@ -36,7 +36,7 @@ function App() {
               <Route path="/about" element={<About />} />
               <Route path="/login" element={<Login showAlert={showAlert} />} />
               <Route path="/signup" element={<SignUp showAlert={showAlert} />} />
-              <Route path="/userdetails" element={<UserDetails />} />
+              <Route path="/userdetails" element={<UserDetails showAlert={showAlert}/>} />
             </Routes>
           </div>
         </Router>

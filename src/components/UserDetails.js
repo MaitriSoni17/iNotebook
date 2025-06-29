@@ -4,25 +4,27 @@ import { useContext, useEffect, useRef } from 'react';
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
-const UserDetails = () => {
+const UserDetails = (props) => {
   let history = useNavigate();
   const context = useContext(userContext);
   const { user, getUser, editUser } = context;
   useEffect(() => {
     if (localStorage.getItem('token')) {
-      getUser()
+      getUser();
       // eslint-disable-next-line
     }
     else {
-      history("/login")
+      history("/login");
     }
-  },)
+  })
   const handleLogout = () => {
     localStorage.removeItem('token');
     history("/login");
   }
   const refChange = useRef(null);
-  const [credentials, setCredentials] = useState({ name: "", email: "", password: "" })
+  const refClose = useRef(null);
+  const [showMsg, setShowMsg] = useState(false);
+  const [credentials, setCredentials] = useState({ id:"", ename: "", eemail: "", epassword: "" })
   const [showPassword, setshowPassword] = useState(false);
   const opassVisibility = () => {
     setshowPassword(prev => !prev);
@@ -30,8 +32,22 @@ const UserDetails = () => {
   const onChange = (e) => {
     setCredentials({ ...credentials, [e.target.name]: e.target.value })
   }
-  const handleEdit = () => {
-    
+  const updateDetails = (currentUser) =>{
+    setCredentials({id:currentUser._id, ename: currentUser.name, eemail: currentUser.email, epassword: ""})
+    refChange.current.click();
+  }
+  const handleSubmit = async (e) =>{
+    e.preventDefault();
+    const res = await editUser(credentials.id, credentials.ename, credentials.eemail, credentials.epassword);
+    if(!res.success){
+      // props.showAlert("Invalid Password", "danger")
+      setShowMsg(true);
+    }
+    else{
+      setShowMsg(false);
+      refClose.current.click();
+      props.showAlert("Updated Successfully", "success")
+    }
   }
   return (
     <>
@@ -42,25 +58,26 @@ const UserDetails = () => {
         <div className="modal-dialog">
           <div className="modal-content">
             <div className="modal-header">
-              <h1 className="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
-              <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              <h1 className="modal-title fs-5" id="exampleModalLabel">Edit Details</h1>
+              <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" ref={refClose}></button>
             </div>
             <div className="modal-body">
-              <form onSubmit={handleEdit}>
+              <form onSubmit={handleSubmit}>
                 <div className="mb-3">
-                  <label htmlFor="name" className="form-label">Name</label>
-                  <input type="text" className="form-control" value={credentials.name} id="name" name="name" aria-describedby="emailHelp" />
+                  <label htmlFor="ename" className="form-label">Name</label>
+                  <input type="text" className="form-control" value={credentials.ename} id="ename" name="ename" aria-describedby="emailHelp" onChange={onChange}/>
                 </div>
                 <div className="mb-3">
-                  <label htmlFor="email" className="form-label">Email address</label>
-                  <input type="email" className="form-control" id="email" name="email" value={credentials.email} aria-describedby="emailHelp" />
+                  <label htmlFor="eemail" className="form-label">Email address</label>
+                  <input type="email" className="form-control" id="eemail" value={credentials.eemail} name="eemail" aria-describedby="emailHelp" onChange={onChange}/>
                   <div id="emailHelp" className="form-text">We'll never share your email with anyone else.</div>
                 </div>
                 <div className="mb-3">
-                  <label htmlFor="password" className="form-label">Password</label>
+                  <label htmlFor="epassword" className="form-label">Password</label>
                   <div className="d-flex">
-                    <input type={showPassword ? "text" : "password"} className="form-control" value={credentials.password} id="password" name="password" onChange={onChange} /><i className={`bi ${showPassword ? "bi-eye-slash" : "bi-eye"} fs-4 mx-3 text-primary`} onClick={opassVisibility}></i>
+                    <input type={showPassword ? "text" : "password"} value={credentials.epassword} className="form-control" id="epassword" name="epassword" onChange={onChange} /><i className={`bi ${showPassword ? "bi-eye-slash" : "bi-eye"} fs-4 mx-3 text-primary`} onClick={opassVisibility}></i>
                   </div>
+                    <div id="showmsg" className={ `form-text text-danger ${showMsg ? "" : "d-none"}` }>Invalid Password</div>
                 </div>
                 <button type="submit" className="btn btn-primary">Submit</button>
               </form>
@@ -75,7 +92,7 @@ const UserDetails = () => {
             <h1 className="card-title text-center mt-4">{user.name}</h1>
             <p className="card-text m-5"><b>Email:</b> {user.email} </p>
             <Link onClick={handleLogout} className="btn btn-primary fs-5" to="/" role="button"><i className="bi bi-box-arrow-left me-2"></i>Log Out</Link>
-            <button onClick={() => { refChange.current.click() }} className="btn btn-primary ms-3 fs-5"><i className="bi bi-pen me-2"></i>Edit Details</button>
+            <button onClick={() => updateDetails(user)} className="btn btn-primary ms-3 fs-5"><i className="bi bi-pen me-2"></i>Edit Details</button>
           </div>
         </div>
       </div>
