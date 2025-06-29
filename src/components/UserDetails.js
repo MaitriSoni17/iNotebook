@@ -7,7 +7,7 @@ import { Link, useNavigate } from 'react-router-dom';
 const UserDetails = () => {
   let history = useNavigate();
   const context = useContext(userContext);
-  const { user, getUser } = context;
+  const { user, getUser, editUser } = context;
   useEffect(() => {
     if (localStorage.getItem('token')) {
       getUser()
@@ -22,22 +22,16 @@ const UserDetails = () => {
     history("/login");
   }
   const refChange = useRef(null);
-  const [credentials, setCredentials] = useState({ name: "", email: "", opassword: "", npassword: "" })
-  const [showOPassword, setshowOPassword] = useState(false);
-  const [showNPassword, setshowNPassword] = useState(false);
+  const [credentials, setCredentials] = useState({ name: "", email: "", password: "" })
+  const [showPassword, setshowPassword] = useState(false);
   const opassVisibility = () => {
-    setshowOPassword(prev => !prev);
-  }
-  const npassVisibility = () => {
-    setshowNPassword(prev => !prev);
+    setshowPassword(prev => !prev);
   }
   const onChange = (e) => {
     setCredentials({ ...credentials, [e.target.name]: e.target.value })
   }
-  const handleSubmit = async (e) =>{
-      e.preventDefault();
-      console.log(credentials.opassword)
-      console.log(user)
+  const handleEdit = () => {
+    
   }
   return (
     <>
@@ -52,26 +46,20 @@ const UserDetails = () => {
               <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div className="modal-body">
-              <form onSubmit={handleSubmit}>
+              <form onSubmit={handleEdit}>
                 <div className="mb-3">
-                  <label htmlFor="ename" className="form-label">Name</label>
-                  <input type="text" className="form-control" id="ename" aria-describedby="emailHelp" />
+                  <label htmlFor="name" className="form-label">Name</label>
+                  <input type="text" className="form-control" value={credentials.name} id="name" name="name" aria-describedby="emailHelp" />
                 </div>
                 <div className="mb-3">
-                  <label htmlFor="eemail" className="form-label">Email address</label>
-                  <input type="email" className="form-control" id="eemail" aria-describedby="emailHelp" />
+                  <label htmlFor="email" className="form-label">Email address</label>
+                  <input type="email" className="form-control" id="email" name="email" value={credentials.email} aria-describedby="emailHelp" />
                   <div id="emailHelp" className="form-text">We'll never share your email with anyone else.</div>
                 </div>
                 <div className="mb-3">
-                  <label htmlFor="opassword" className="form-label">Old Password</label>
+                  <label htmlFor="password" className="form-label">Password</label>
                   <div className="d-flex">
-                    <input type={showOPassword ? "text" : "password"} className="form-control" id="opassword" name="opassword" onChange={onChange} /><i className={`bi ${showOPassword ? "bi-eye-slash" : "bi-eye"} fs-4 mx-3 text-primary`} onClick={opassVisibility}></i>
-                  </div>
-                </div>
-                <div className="mb-3">
-                  <label htmlFor="npassword" className="form-label">Old Password</label>
-                  <div className="d-flex">
-                    <input type={showNPassword ? "text" : "password"} className="form-control" id="npassword" name="npassword" onChange={onChange} /><i className={`bi ${showNPassword ? "bi-eye-slash" : "bi-eye"} fs-4 mx-3 text-primary`} onClick={npassVisibility}></i>
+                    <input type={showPassword ? "text" : "password"} className="form-control" value={credentials.password} id="password" name="password" onChange={onChange} /><i className={`bi ${showPassword ? "bi-eye-slash" : "bi-eye"} fs-4 mx-3 text-primary`} onClick={opassVisibility}></i>
                   </div>
                 </div>
                 <button type="submit" className="btn btn-primary">Submit</button>

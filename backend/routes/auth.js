@@ -112,18 +112,13 @@ router.post('/getuser', fetchuser, async (req, res) => {
 router.put('/edituser/:id', fetchuser, async (req, res) => {
     let success = false
     try {
-        const {name, email, password} = req.body;
+        const {name, email} = req.body;
         let newDetails = {}
         if(name){
             newDetails.name = name;
         }
         if(email){
             newDetails.email = email;
-        }
-        const salt = await bcrypt.genSalt(10);
-        const secPass = await bcrypt.hash(req.body.password, salt);
-        if(password){
-            newDetails.password = secPass;
         }
         // if(await User.findOne({email: req.body.email})){
         //     success = false
