@@ -139,4 +139,29 @@ router.put('/edituser/:id', fetchuser, async (req, res) => {
         res.status(500).send("Internal Server Error");
     }
 })
+
+// ROUT 4: Delete user using: DELETE "/api/auth/deleteuser". Login required
+router.delete('/deleteuser/:id', fetchuser, async (req, res) => {
+    let success = false
+    try {
+        const {password} = req.body;
+        let user = await User.findById(req.params.id);
+        if(!user){
+            success = false;
+            return res.status(404).json({success, error: "Not Found!!"});
+        }
+        const passwordCompare = await bcrypt.compare(password, user.password);
+        if (!passwordCompare) {
+            success = false;
+            return res.status(400).json({ success, error: "Please try to login with correct credentials." });
+        }
+        user = await User.findByIdAndDelete(req.params.id);
+        success=true;
+        res.json({success, user});
+    }
+    catch (error) {
+        console.error(error.message);
+        res.status(500).send("Internal Server Error");
+    }
+})
 module.exports = router
