@@ -140,7 +140,44 @@ router.put('/edituser/:id', fetchuser, async (req, res) => {
     }
 })
 
-// ROUT 4: Delete user using: DELETE "/api/auth/deleteuser". Login required
+// ROUT 5: Update Details of loggedin user using: PUT "/api/auth/editpassuser". Login required
+router.put('/editpassuser/:id', fetchuser, async (req, res) => {
+    let success = false
+    try {
+        const {name, email, password, npassword} = req.body;
+        let newDetails = {}
+        if(name){
+            newDetails.name = name;
+        }
+        if(email){
+            newDetails.email = email;
+        }
+        const salt = await bcrypt.genSalt(10);
+        const secPass = await bcrypt.hash(req.body.npassword, salt);
+        if(npassword){
+            newDetails.password = secPass;
+        }
+        let user = await User.findById(req.params.id);
+        if(!user){
+            success = false;
+            return res.status(404).json({success, error: "Not Found!!"});
+        }
+        const passwordCompare = await bcrypt.compare(password, user.password);
+        if (!passwordCompare) {
+            success = false;
+            return res.status(400).json({ success, error: "Please try to login with correct credentials." });
+        }
+        user = await User.findByIdAndUpdate(req.params.id, {$set: newDetails});
+        success=true;
+        res.json({success, user});
+    }
+    catch (error) {
+        console.error(error.message);
+        res.status(500).send("Internal Server Error");
+    }
+})
+
+// ROUT 6: Delete user using: DELETE "/api/auth/deleteuser". Login required
 router.delete('/deleteuser/:id', fetchuser, async (req, res) => {
     let success = false
     try {
