@@ -112,27 +112,27 @@ router.post('/getuser', fetchuser, async (req, res) => {
 router.put('/edituser/:id', fetchuser, async (req, res) => {
     let success = false
     try {
-        const {name, email, password} = req.body;
+        const { name, email, password } = req.body;
         let newDetails = {}
-        if(name){
+        if (name) {
             newDetails.name = name;
         }
-        if(email){
+        if (email) {
             newDetails.email = email;
         }
         let user = await User.findById(req.params.id);
-        if(!user){
+        if (!user) {
             success = false;
-            return res.status(404).json({success, error: "Not Found!!"});
+            return res.status(404).json({ success, error: "Not Found!!" });
         }
         const passwordCompare = await bcrypt.compare(password, user.password);
         if (!passwordCompare) {
             success = false;
             return res.status(400).json({ success, error: "Please try to login with correct credentials." });
         }
-        user = await User.findByIdAndUpdate(req.params.id, {$set: newDetails});
-        success=true;
-        res.json({success, user});
+        user = await User.findByIdAndUpdate(req.params.id, { $set: newDetails });
+        success = true;
+        res.json({ success, user });
     }
     catch (error) {
         console.error(error.message);
@@ -144,32 +144,36 @@ router.put('/edituser/:id', fetchuser, async (req, res) => {
 router.put('/editpassuser/:id', fetchuser, async (req, res) => {
     let success = false
     try {
-        const {name, email, password, npassword} = req.body;
+        const { name, email, password, npassword } = req.body;
         let newDetails = {}
-        if(name){
+        if (name) {
             newDetails.name = name;
         }
-        if(email){
+        if (email) {
             newDetails.email = email;
         }
-        const salt = await bcrypt.genSalt(10);
-        const secPass = await bcrypt.hash(req.body.npassword, salt);
-        if(npassword){
+        if (npassword) {
+            const salt = await bcrypt.genSalt(10);
+            const secPass = await bcrypt.hash(req.body.npassword, salt);
             newDetails.password = secPass;
         }
+        if (!password || !npassword) {
+            return res.status(400).json({ success: false, error: "Old and new passwords are required" });
+        }
+
         let user = await User.findById(req.params.id);
-        if(!user){
+        if (!user) {
             success = false;
-            return res.status(404).json({success, error: "Not Found!!"});
+            return res.status(404).json({ success, error: "Not Found!!" });
         }
         const passwordCompare = await bcrypt.compare(password, user.password);
         if (!passwordCompare) {
             success = false;
             return res.status(400).json({ success, error: "Please try to login with correct credentials." });
         }
-        user = await User.findByIdAndUpdate(req.params.id, {$set: newDetails});
-        success=true;
-        res.json({success, user});
+        user = await User.findByIdAndUpdate(req.params.id, { $set: newDetails });
+        success = true;
+        res.json({ success, user });
     }
     catch (error) {
         console.error(error.message);
@@ -181,11 +185,11 @@ router.put('/editpassuser/:id', fetchuser, async (req, res) => {
 router.delete('/deleteuser/:id', fetchuser, async (req, res) => {
     let success = false
     try {
-        const {password} = req.body;
+        const { password } = req.body;
         let user = await User.findById(req.params.id);
-        if(!user){
+        if (!user) {
             success = false;
-            return res.status(404).json({success, error: "Not Found!!"});
+            return res.status(404).json({ success, error: "Not Found!!" });
         }
         const passwordCompare = await bcrypt.compare(password, user.password);
         if (!passwordCompare) {
@@ -193,8 +197,8 @@ router.delete('/deleteuser/:id', fetchuser, async (req, res) => {
             return res.status(400).json({ success, error: "Please try to login with correct credentials." });
         }
         user = await User.findByIdAndDelete(req.params.id);
-        success=true;
-        res.json({success, user});
+        success = true;
+        res.json({ success, user });
     }
     catch (error) {
         console.error(error.message);
