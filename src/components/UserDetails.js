@@ -36,7 +36,7 @@ const UserDetails = (props) => {
 
   const onChange = (e) => {
     setCredentials({ ...credentials, [e.target.name]: e.target.value })
-    setPass({...pass, [e.target.name]: e.target.value })
+    setPass({ ...pass, [e.target.name]: e.target.value })
   }
   const updateDetails = (currentUser) => {
     setCredentials({ id: currentUser._id, ename: currentUser.name, eemail: currentUser.email, epassword: "" })
@@ -55,17 +55,17 @@ const UserDetails = (props) => {
     }
   }
   const changePass = (currentUser) => {
-    setPass({id: currentUser._id, name: currentUser.name, email: currentUser.email, opassword: "", npassword: ""})
+    setPass({ id: currentUser._id, name: currentUser.name, email: currentUser.email, opassword: "", npassword: "" })
     refChangePass.current.click();
   }
 
   const handlePassChange = async (e) => {
     e.preventDefault();
     const res = await changePassword(pass.id, pass.name, pass.email, pass.opassword, pass.npassword);
-    if(!res.success){
+    if (!res.success) {
       setShowMsg(true);
     }
-    else{
+    else {
       setShowMsg(false);
       refClose.current.click();
       props.showAlert("Updated Successfully", "success")
@@ -129,18 +129,40 @@ const UserDetails = (props) => {
                 <div className="mb-3">
                   <label htmlFor="opassword" className="form-label">Password</label>
                   <div className="d-flex">
-                    <input type={showoPassword ? "text" : "password"} value={pass.password} className="form-control" id="opassword" name="opassword" onChange={onChange} /><i className={`bi ${showoPassword ? "bi-eye-slash" : "bi-eye"} fs-4 mx-3 text-primary`} onClick={() => {setshowoPassword(prev => !prev)}}></i>
+                    <input type={showoPassword ? "text" : "password"} value={pass.password} className="form-control" id="opassword" name="opassword" onChange={onChange} /><i className={`bi ${showoPassword ? "bi-eye-slash" : "bi-eye"} fs-4 mx-3 text-primary`} onClick={() => { setshowoPassword(prev => !prev) }}></i>
                   </div>
                   <div id="showmsg" className={`form-text text-danger ${showMsg ? "" : "d-none"}`}>Invalid Password</div>
                 </div>
                 <div className="mb-3">
                   <label htmlFor="npassword" className="form-label">New Password</label>
                   <div className="d-flex">
-                    <input type={shownPassword ? "text" : "password"} value={pass.npassword} className="form-control" id="npassword" name="npassword" onChange={onChange} /><i className={`bi ${shownPassword ? "bi-eye-slash" : "bi-eye"} fs-4 mx-3 text-primary`} onClick={() => {setshownPassword(prev => !prev)}}></i>
+                    <input type={shownPassword ? "text" : "password"} value={pass.npassword} className="form-control" id="npassword" name="npassword" onChange={onChange} /><i className={`bi ${shownPassword ? "bi-eye-slash" : "bi-eye"} fs-4 mx-3 text-primary`} onClick={() => { setshownPassword(prev => !prev) }}></i>
                   </div>
                 </div>
                 <button type="submit" className="btn btn-primary">Submit</button>
               </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#deleteUser">
+        Launch demo modal
+      </button>
+
+      <div className="modal fade" id="deleteUser" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div className="modal-dialog modal-dialog-centered">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h1 className="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+              <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div className="modal-body">
+              ...
+            </div>
+            <div className="modal-footer">
+              <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="button" className="btn btn-primary">Save changes</button>
             </div>
           </div>
         </div>
@@ -155,6 +177,7 @@ const UserDetails = (props) => {
             <Link onClick={handleLogout} className="btn btn-primary fs-5" to="/" role="button"><i className="bi bi-box-arrow-left me-2"></i>Log Out</Link>
             <button onClick={() => updateDetails(user)} className="btn btn-primary ms-3 fs-5"><i className="bi bi-pen me-2"></i>Edit Details</button>
             <button onClick={() => changePass(user)} className="btn btn-primary ms-3 fs-5"><i className="bi bi-shield-lock-fill me-2"></i>Change Password</button>
+            <button className="btn btn-danger ms-3 fs-5"><i className="bi bi-trash me-2"></i>Delete</button>
           </div>
         </div>
       </div>
