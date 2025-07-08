@@ -29,24 +29,18 @@ const UserState = (props) => {
         user = await response.json()
         return user;
     }
-    const changePassword = async (id, password, npassword) => {
-        // const { password, npassword } = req.body;
-
-        
+    const changePassword = async (id, name, email, password, npassword) => {
         const response = await fetch(`http://localhost:5000/api/auth/editpassuser/${id}`, {
             method: 'PUT',
             headers: {
                 "auth-token": localStorage.getItem('token'),
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ password: password, npassword })
+            body: JSON.stringify({ name, email, password, npassword })
         });
-        const json = await response.json();
-        if (!password || !npassword) {
-            return json.status(400).json({ success: false, error: "Old or new password missing" });
-        }
-        return json;
-    };
+        user = await response.json()
+        return user;
+    }
     return (
         <userContext.Provider value={{ user, getUser, editUser, changePassword }}>
             {props.children}
