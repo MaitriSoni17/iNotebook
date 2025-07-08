@@ -27,6 +27,7 @@ const UserDetails = (props) => {
   const [showMsg, setShowMsg] = useState(false);
   const [credentials, setCredentials] = useState({ id: "", ename: "", eemail: "", epassword: "" });
   const [pass, setPass] = useState({ id: "", name: "", email: "", opassword: "", npassword: "" });
+  const [cpass, setcPass] = useState({password: ""});
   const [showPassword, setshowPassword] = useState(false);
   const [showoPassword, setshowoPassword] = useState(false);
   const [shownPassword, setshownPassword] = useState(false);
@@ -37,6 +38,7 @@ const UserDetails = (props) => {
   const onChange = (e) => {
     setCredentials({ ...credentials, [e.target.name]: e.target.value })
     setPass({ ...pass, [e.target.name]: e.target.value })
+    setcPass({...cpass, [e.target.name]: e.target.value})
   }
   const updateDetails = (currentUser) => {
     setCredentials({ id: currentUser._id, ename: currentUser.name, eemail: currentUser.email, epassword: "" })
@@ -129,7 +131,7 @@ const UserDetails = (props) => {
                 <div className="mb-3">
                   <label htmlFor="opassword" className="form-label">Password</label>
                   <div className="d-flex">
-                    <input type={showoPassword ? "text" : "password"} value={pass.password} className="form-control" id="opassword" name="opassword" onChange={onChange} /><i className={`bi ${showoPassword ? "bi-eye-slash" : "bi-eye"} fs-4 mx-3 text-primary`} onClick={() => { setshowoPassword(prev => !prev) }}></i>
+                    <input type={showoPassword ? "text" : "password"} value={pass.opassword} className="form-control" id="opassword" name="opassword" onChange={onChange} /><i className={`bi ${showoPassword ? "bi-eye-slash" : "bi-eye"} fs-4 mx-3 text-primary`} onClick={() => { setshowoPassword(prev => !prev) }}></i>
                   </div>
                   <div id="showmsg" className={`form-text text-danger ${showMsg ? "" : "d-none"}`}>Invalid Password</div>
                 </div>
@@ -158,11 +160,16 @@ const UserDetails = (props) => {
               <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div className="modal-body">
-              ...
-            </div>
-            <div className="modal-footer">
-              <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-              <button type="button" className="btn btn-primary">Save changes</button>
+              <form>
+                <div className="mb-3">
+                  <label htmlFor="opassword" className="form-label">Password</label>
+                  <div className="d-flex">
+                    <input type={showPassword ? "text" : "password"} value={cpass.password} className="form-control" id="opassword" name="opassword" onChange={onChange} /><i className={`bi ${showPassword ? "bi-eye-slash" : "bi-eye"} fs-4 mx-3 text-primary`} onClick={() => { setshowoPassword(prev => !prev) }}></i>
+                  </div>
+                  <div id="showmsg" className={`form-text text-danger ${showMsg ? "" : "d-none"}`}>Invalid Password</div>
+                </div>
+                <button type="submit" className="btn btn-primary">Submit</button>
+              </form>
             </div>
           </div>
         </div>
