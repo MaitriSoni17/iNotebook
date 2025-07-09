@@ -139,7 +139,7 @@ const UserDetails = (props) => {
         Launch demo modal
       </button>
 
-      <div className="modal fade" id="changePass" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div className="modal fade" id="changePass" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div className="modal-dialog">
           <div className="modal-content">
             <div className="modal-header">
@@ -173,7 +173,7 @@ const UserDetails = (props) => {
         Launch demo modal
       </button>
 
-      <div className="modal fade" id="deleteUser" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div className="modal fade" id="deleteUser" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div className="modal-dialog modal-dialog-centered">
           <div className="modal-content bg-danger-subtle border border-danger shadow">
             <div className="modal-header border-bottom border-danger">

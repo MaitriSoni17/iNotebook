@@ -93,8 +93,8 @@ const Notes = (props) => {
             <div className="row my-3">
                 <h1 className="col">Your Notes</h1>
                 <button type="button" className="btn btn-primary w-auto fs-5" onClick={() => { refAddNote.current.click() }}><i className="bi bi-cloud-plus-fill mx-2"></i>Add Note</button>
-                <div className='container'>
-                    {notes.length === 0 && "No Notes to Dispaly"}
+                <div className="container-lg mt-5 text-secondary text-center fs-4">
+                    {notes.length === 0 && "Your notes going to be display here!!"}
                 </div>
                 {notes.map((note) => {
                     return <NoteItem key={note._id} updateNote={updateNote} note={note} showAlert={props.showAlert} ref={ref} />
