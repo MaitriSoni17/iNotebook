@@ -41,8 +41,21 @@ const UserState = (props) => {
         user = await response.json()
         return user;
     }
+    const deleteUser = async (id, password) => {
+        const response = await fetch(`http://localhost:5000/api/auth/deleteuser/${id}`, {
+            method: 'DELETE',
+            headers: {
+                "auth-token": localStorage.getItem('token'),
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ password })
+        });
+        user = await response.json()
+        return user;
+    }
+
     return (
-        <userContext.Provider value={{ user, getUser, editUser, changePassword }}>
+        <userContext.Provider value={{ user, getUser, editUser, changePassword, deleteUser }}>
             {props.children}
         </userContext.Provider>
     )
