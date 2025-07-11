@@ -11,6 +11,8 @@ const NoteItem = (props) => {
     }
     return (
         <>
+            {/* Display Note */}
+
             <button ref={refDisplay} type="button" className="btn btn-primary d-none" data-bs-toggle="modal" data-bs-target={`#NoteDisplay-${note._id}`}>
                 Launch demo modal
             </button>
@@ -35,7 +37,7 @@ const NoteItem = (props) => {
                 </div>
             </div>
 
-
+            {/* Display Notes */}
 
             <div className="col-md-3">
                 <div className="card bg-primary bg-opacity-10 border-primary my-5 rounded-4 shadow">

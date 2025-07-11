@@ -32,8 +32,8 @@ const NavBar = () => {
                             </li>
                         </ul>
                         {!localStorage.getItem('token') ? <form className="d-flex">
-                            <Link className="btn btn-primary mx-1 fs-6" to = "/login" role="button" aria-disabled="true"><i className="bi bi-box-arrow-in-right me-2"></i>Login</Link>
-                            <Link className="btn btn-primary mx-1 fs-6" to="/signup" role="button" aria-disabled="true"><i className="bi bi-person me-2"></i>Sign Up</Link>
+                            <Link className={`btn btn-primary mx-1 fs-6 ${location.pathname === "/login"? "active":""}`} to = "/login" role="button" aria-disabled="true"><i className="bi bi-box-arrow-in-right me-2"></i>Login</Link>
+                            <Link className={`btn btn-primary mx-1 fs-6 ${location.pathname === "/signup"? "active":""}`} to="/signup" role="button" aria-disabled="true"><i className="bi bi-person me-2"></i>Sign Up</Link>
                         </form>: <form className="d-flex"><Link onClick={handleLogout} className="btn btn-primary mx-1 fs-6" to="/" role="button"><i className="bi bi-box-arrow-left me-2"></i>Log Out</Link><i className="bi bi-person-circle fs-3 mx-3 text-primary" onClick={showUser}></i></form>}
                     </div>
                 </div>

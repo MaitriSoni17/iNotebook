@@ -51,7 +51,7 @@ const SignUp = (props) => {
             <div className="mb-4">
               <label htmlFor="name" className="form-label">Name</label>
               <div className="d-flex">
-                <input type="text" className="form-control me-5" onChange={onChange} id="name" name="name" />
+                <input type="text" className="form-control me-5" onChange={onChange} id="name" name="name" required/>
               </div>
             </div>
             <div className="mb-4">

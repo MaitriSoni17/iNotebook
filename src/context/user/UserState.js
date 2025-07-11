@@ -4,6 +4,7 @@ import userContext from './userContext'
 const UserState = (props) => {
     const userInitial = [];
     let [user, setUser] = useState(userInitial);
+    // Get User
     const getUser = async () => {
         // API Call
         const response = await fetch("http://localhost:5000/api/auth/getuser", {
@@ -17,6 +18,7 @@ const UserState = (props) => {
         // console.log(user);
         setUser(user);
     }
+    // Edit User Details
     const editUser = async (id, name, email, password) => {
         const response = await fetch(`http://localhost:5000/api/auth/edituser/${id}`, {
             method: 'PUT',
@@ -29,6 +31,7 @@ const UserState = (props) => {
         user = await response.json()
         return user;
     }
+    // Change Password
     const changePassword = async (id, name, email, password, npassword) => {
         const response = await fetch(`http://localhost:5000/api/auth/editpassuser/${id}`, {
             method: 'PUT',
@@ -41,6 +44,7 @@ const UserState = (props) => {
         user = await response.json()
         return user;
     }
+    // Delete User Account with all notes deleted
     const deleteUser = async (id, password) => {
         const response = await fetch(`http://localhost:5000/api/auth/deleteuser/${id}`, {
             method: 'DELETE',

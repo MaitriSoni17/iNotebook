@@ -38,10 +38,11 @@ const Notes = (props) => {
 
     return (
         <>
-            <button ref={ref} type="button" className="d-none btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            {/* Edit Note */}
+            <button ref={ref} type="button" className="d-none btn btn-primary" data-bs-toggle="modal" data-bs-target="#editNote">
                 Launch demo modal
             </button>
-            <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div className="modal fade" id="editNote" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div className="modal-dialog">
                     <div className="modal-content">
                         <div className="modal-header">
@@ -73,6 +74,7 @@ const Notes = (props) => {
                 </div>
             </div>
 
+            {/* Add a New Note */}
 
             <button ref={refAddNote} type="button" className="btn btn-primary d-none" data-bs-toggle="modal" data-bs-target="#addnote">
                 Launch demo modal
@@ -90,6 +92,9 @@ const Notes = (props) => {
                     </div>
                 </div>
             </div>
+
+            {/* Notes Display Section */}
+
             <div className="row my-3">
                 <h1 className="col">Your Notes</h1>
                 <button type="button" className="btn btn-primary w-auto fs-5" onClick={() => { refAddNote.current.click() }}><i className="bi bi-cloud-plus-fill mx-2"></i>Add Note</button>

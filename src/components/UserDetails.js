@@ -196,6 +196,8 @@ const UserDetails = (props) => {
         </div>
       </div>
 
+      {/* Display User Details */}
+
       <div className="container my-5 pt-4">
         <div className="card border-primary position-relative rounded-5 text-center shadow my-5">
           <i className="bi bi-person-circle position-absolute top-0 start-50 translate-middle bg-white text-primary" style={{ fontSize: '150px', cursor: 'auto' }}></i>
