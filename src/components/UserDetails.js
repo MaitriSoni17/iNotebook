@@ -3,7 +3,6 @@ import userContext from '../context/user/userContext'
 import { useContext, useEffect, useRef } from 'react';
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-
 const UserDetails = (props) => {
   let history = useNavigate();
   const context = useContext(userContext);
@@ -22,24 +21,25 @@ const UserDetails = (props) => {
     history("/login");
   }
   const refChange = useRef(null);
+  const refCloseEdit = useRef(null);
   const refClose = useRef(null);
+  const refClosePass = useRef(null);
   const refChangePass = useRef(null);
   const refDeleteUser = useRef(null);
   const [showMsg, setShowMsg] = useState(false);
   const [credentials, setCredentials] = useState({ id: "", ename: "", eemail: "", epassword: "" });
   const [pass, setPass] = useState({ id: "", name: "", email: "", opassword: "", npassword: "" });
-  const [cpass, setcPass] = useState({id: "", password: ""});
+  const [cpass, setcPass] = useState({ id: "", password: "" });
   const [showPassword, setshowPassword] = useState(false);
   const [showoPassword, setshowoPassword] = useState(false);
   const [shownPassword, setshownPassword] = useState(false);
   const opassVisibility = () => {
     setshowPassword(prev => !prev);
   }
-
   const onChange = (e) => {
     setCredentials({ ...credentials, [e.target.name]: e.target.value })
     setPass({ ...pass, [e.target.name]: e.target.value })
-    setcPass({...cpass, [e.target.name]: e.target.value})
+    setcPass({ ...cpass, [e.target.name]: e.target.value })
   }
   const updateDetails = (currentUser) => {
     setCredentials({ id: currentUser._id, ename: currentUser.name, eemail: currentUser.email, epassword: "" })
@@ -53,7 +53,7 @@ const UserDetails = (props) => {
     }
     else {
       setShowMsg(false);
-      refClose.current.click();
+      refCloseEdit.current.click();
       props.showAlert("Updated Successfully", "success")
     }
   }
@@ -61,7 +61,6 @@ const UserDetails = (props) => {
     setPass({ id: currentUser._id, name: currentUser.name, email: currentUser.email, opassword: "", npassword: "" })
     refChangePass.current.click();
   }
-
   const handlePassChange = async (e) => {
     e.preventDefault();
     const res = await changePassword(pass.id, pass.name, pass.email, pass.opassword, pass.npassword);
@@ -70,16 +69,14 @@ const UserDetails = (props) => {
     }
     else {
       setShowMsg(false);
-      refClose.current.click();
+      refClosePass.current.click();
       props.showAlert("Updated Successfully", "success")
     }
   }
-
   const deleteU = (currentUser) => {
-    setcPass({id: currentUser._id, password: ""})
+    setcPass({ id: currentUser._id, password: "" })
     refDeleteUser.current.click();
   }
-
   const handleDelete = async (e) => {
     e.preventDefault();
     const res = await deleteUser(cpass.id, cpass.password);
@@ -93,10 +90,8 @@ const UserDetails = (props) => {
       props.showAlert("Deleted Successfully", "success")
     }
   }
-
   return (
     <>
-
       {/* Update User Details */}
       <button type="button" ref={refChange} className="btn btn-primary d-none" data-bs-toggle="modal" data-bs-target="#edituser">
         Launch demo modal
@@ -106,7 +101,7 @@ const UserDetails = (props) => {
           <div className="modal-content">
             <div className="modal-header">
               <h1 className="modal-title fs-5" id="exampleModalLabel">Edit Details</h1>
-              <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" ref={refClose}></button>
+              <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" ref={refCloseEdit}></button>
             </div>
             <div className="modal-body">
               <form onSubmit={handleDetailSubmit}>
@@ -132,19 +127,16 @@ const UserDetails = (props) => {
           </div>
         </div>
       </div>
-
       {/* Change Password */}
-
       <button type="button" ref={refChangePass} className="btn btn-primary d-none" data-bs-toggle="modal" data-bs-target="#changePass">
         Launch demo modal
       </button>
-
       <div className="modal fade" id="changePass" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div className="modal-dialog">
           <div className="modal-content">
             <div className="modal-header">
               <h1 className="modal-title fs-5" id="exampleModalLabel">Change Password</h1>
-              <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" ref={refClose}></button>
+              <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" ref={refClosePass}></button>
             </div>
             <div className="modal-body">
               <form onSubmit={handlePassChange}>
@@ -167,12 +159,10 @@ const UserDetails = (props) => {
           </div>
         </div>
       </div>
-
       {/* Delete User */}
       <button type="button" ref={refDeleteUser} className="btn btn-primary d-none" data-bs-toggle="modal" data-bs-target="#deleteUser">
         Launch demo modal
       </button>
-
       <div className="modal fade" id="deleteUser" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div className="modal-dialog modal-dialog-centered">
           <div className="modal-content bg-danger-subtle border border-danger shadow">
@@ -195,9 +185,7 @@ const UserDetails = (props) => {
           </div>
         </div>
       </div>
-
       {/* Display User Details */}
-
       <div className="container my-5 pt-4">
         <div className="card border-primary position-relative rounded-5 text-center shadow my-5">
           <i className="bi bi-person-circle position-absolute top-0 start-50 translate-middle bg-white text-primary" style={{ fontSize: '150px', cursor: 'auto' }}></i>
@@ -207,12 +195,11 @@ const UserDetails = (props) => {
             <Link onClick={handleLogout} className="btn btn-primary fs-5" to="/" role="button"><i className="bi bi-box-arrow-left me-2"></i>Log Out</Link>
             <button onClick={() => updateDetails(user)} className="btn btn-primary ms-3 fs-5"><i className="bi bi-pen me-2"></i>Edit Details</button>
             <button onClick={() => changePass(user)} className="btn btn-primary ms-3 fs-5"><i className="bi bi-shield-lock-fill me-2"></i>Change Password</button>
-            <button className="btn btn-danger ms-3 fs-5" onClick={()=>{deleteU(user)}}><i className="bi bi-trash me-2"></i>Delete</button>
+            <button className="btn btn-danger ms-3 fs-5" onClick={() => { deleteU(user) }}><i className="bi bi-trash me-2"></i>Delete</button>
           </div>
         </div>
       </div>
     </>
   )
 }
-
 export default UserDetails
