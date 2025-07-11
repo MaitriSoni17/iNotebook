@@ -1,5 +1,6 @@
 const express = require('express');
 const User = require('../models/User');
+const Note = require('../models/Note');
 const router = express.Router();
 const { body, validationResult } = require('express-validator');
 const bcrypt = require('bcryptjs');
@@ -196,9 +197,10 @@ router.delete('/deleteuser/:id', fetchuser, async (req, res) => {
             success = false;
             return res.status(400).json({ success, error: "Please try to login with correct credentials." });
         }
+        notes = await Note.deleteMany({ user: req.params.id });
         user = await User.findByIdAndDelete(req.params.id);
         success = true;
-        res.json({ success, user });
+        res.json({ success, user, notes });
     }
     catch (error) {
         console.error(error.message);
