@@ -15,11 +15,20 @@ const Notes = (props) => {
         else {
             history("/login")
         }
-    },)
+    },[])
     const ref = useRef(null)
     const refClose = useRef(null)
     const refCloseAdd = useRef(null)
     const refAddNote = useRef(null)
+    const [searchTerm, setSearchTerm] = useState("");
+    const [filterNotes, setFilterNotes] = useState(notes);
+    useEffect(()=>{
+        const lowerCaseTerm = searchTerm.toLowerCase();
+        const filtered = notes.filter(note => 
+            note.title.toLowerCase().includes(lowerCaseTerm) || note.description.toLowerCase().includes(lowerCaseTerm) || note.tag.toLowerCase().includes(lowerCaseTerm)
+        );
+        setFilterNotes(filtered);
+    }, [searchTerm, notes]);
     const [note, setNote] = useState({ id: "", etitle: "", edescription: "", etag: "" })
     const updateNote = (currentNote) => {
         ref.current.click();
@@ -68,7 +77,7 @@ const Notes = (props) => {
                         <div className="modal-footer">
                             <button type="button" ref={refClose} className="btn btn-secondary fs-6" data-bs-dismiss="modal">Close</button>
                             <button type="button" className="btn btn-danger fs-6" data-bs-dismiss="modal" onClick={() => { deleteNote(note.id); props.showAlert("Note Deleted Successfully", "success"); }}><i className="bi bi-trash3-fill me-2"></i>Delete</button>
-                            <button disabled={note.etitle.length < 5 || note.edescription < 5} type="button" onClick={handleClick} className="btn btn-primary fs-6"><i className="bi bi-pen-fill me-2"></i>Update Note</button>
+                            <button disabled={note.etitle.length < 5 || note.edescription.length < 5} type="button" onClick={handleClick} className="btn btn-primary fs-6"><i className="bi bi-pen-fill me-2"></i>Update Note</button>
                         </div>
                     </div>
                 </div>
@@ -98,10 +107,16 @@ const Notes = (props) => {
             <div className="row my-3">
                 <h1 className="col">Your Notes</h1>
                 <button type="button" className="btn btn-primary w-auto fs-5" onClick={() => { refAddNote.current.click() }}><i className="bi bi-cloud-plus-fill mx-2"></i>Add Note</button>
-                <div className="container-lg mt-5 text-secondary text-center fs-4">
-                    {notes.length === 0 && "Your notes going to be display here!!"}
+                <div className="justify-center items-start px-4 py-2 bg-white border border-primary shadow rounded-pill mb-5 ms-3 me-3 mt-5">
+                    <div className="row">
+                        <i className="col-sm-1 bi bi-search fs-3"></i>
+                        <input type="search" placeholder="Search" value={searchTerm} onChange={(e)=>{setSearchTerm(e.target.value)}} className="col form-control rounded-pill border-0 search-task fs-4" />
+                    </div>
                 </div>
-                {notes.map((note) => {
+                <div className="container-lg mt-5 text-secondary text-center fs-4">
+                    {filterNotes.length === 0 && "Your notes going to be display here!!"}
+                </div>
+                {filterNotes.map((note) => {
                     return <NoteItem key={note._id} updateNote={updateNote} note={note} showAlert={props.showAlert} ref={ref} />
                 })}
             </div>
